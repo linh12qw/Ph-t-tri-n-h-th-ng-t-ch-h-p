@@ -1,38 +1,38 @@
 package bai1;
 
-import java.io.*;
 import java.net.Socket;
+import java.util.Scanner;
+import java.io.*;
 
 public class client {
-    public static void main(String argv[]) throws Exception {
-        String sentence_to_server;
-        String sentence_from_server;
+    public final static String serverIP = "127.0.0.1";
+    public final static int serverPort = 15;
 
-        // Tạo Inputstream(từ bàn phím)
-        System.out.print("Input from client: ");
-        BufferedReader inFromUser = new BufferedReader(new InputStreamReader(System.in));
-        // Lấy chuỗi ký tự nhập từ bàn phím
-        sentence_to_server = inFromUser.readLine();
-        //
-        // Tạo socket cho client kết nối đến server qua ID address và port number
-        Socket clientSocket = new Socket("127.0.0.1", 6543);
+    public static void main(String[] args) throws InterruptedException, IOException {
+        Scanner input = new Scanner(System.in);
+        Socket s = null;
+        try {
+            while (true) {
+                s = new Socket(serverIP, serverPort);
+                // System.out.println("client da duoc tao");
 
-        // Tạo OutputStream nối với Socket
-        DataOutputStream outToServer = new DataOutputStream(clientSocket.getOutputStream());
+                InputStream is = s.getInputStream();
+                OutputStream os = s.getOutputStream();
+                System.out.println("nhap: ");
+                int a = input.nextInt();
 
-        // Tạo inputStream nối với Socket
-        BufferedReader inFromServer = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-        //
-        // Gửi chuỗi ký tự tới Server thông qua outputStream đã nối với Socket (ở trên)
-        outToServer.writeBytes(sentence_to_server + '\n');
+                os.write(a);
+                Thread.sleep(500);
 
-        // Đọc tin từ Server thông qua InputSteam đã nối với socket
-        sentence_from_server = inFromServer.readLine();
+            }
+        } catch (Exception e) {
+            System.out.println("error: can not create socket");
+            // TODO: handle exception
+        } finally {
+            if (s != null) {
+                s.close();
+            }
+        }
 
-        // print kết qua ra màn hình
-        System.out.println("FROM SERVER: " + sentence_from_server);
-
-        // Đóng liên kết socket
-        clientSocket.close();
     }
 }

@@ -1,62 +1,66 @@
 package bai1;
 
-import java.io.*;
 import java.net.Socket;
-
 import java.net.ServerSocket;
+import java.io.*;
 
 public class server {
-    public static String trave(int so) {
+    public final static int serverPort = 15;
 
-        if (so == 0)
-            return "khong";
-        if (so == 1)
-            return "mot";
-        if (so == 2)
-            return "hai";
-        if (so == 3)
-            return "ba";
-        if (so == 4)
-            return "bon";
-        if (so == 5)
-            return "nam";
-        if (so == 6)
-            return "sau";
-        if (so == 7)
-            return "bay";
-        if (so == 8)
-            return "tam";
-        if (so == 9)
-            return "chin";
+    public static void main(String[] args) {
+        try {
+            ServerSocket ss = new ServerSocket(serverPort);
+            System.out.println("server da duoc tao");
+            while (true) {
+                try {
+                    Socket s = ss.accept();
+                    OutputStream os = s.getOutputStream();
+                    InputStream is = s.getInputStream();
+                    int ch = 0;
+                    ch = is.read();
+                    if (ch == 1) {
+                        System.out.println(ch + ": mot");
 
-        return "khong phai so nguyen";
-    }
+                    } else if (ch == 2) {
+                        System.out.println(ch + ": hai");
 
-    public static void main(String argv[]) throws Exception {
-        String sentence_from_client;
-        String sentence_to_client;
+                    } else if (ch == 3) {
+                        System.out.println(ch + ": ba");
 
-        // Tạo socket server, chờ tại cổng '6543'
-        ServerSocket welcomeSocket = new ServerSocket(6543);
+                    } else if (ch == 4) {
+                        System.out.println(ch + ": bon");
 
-        while (true) {
-            // chờ yêu cầu từ client
-            Socket connectionSocket = welcomeSocket.accept();
+                    } else if (ch == 5) {
+                        System.out.println(ch + ": nam");
 
-            // Tạo input stream, nối tới Socket
-            BufferedReader inFromClient = new BufferedReader(new InputStreamReader(connectionSocket.getInputStream()));
+                    } else if (ch == 6) {
+                        System.out.println(ch + ": sau");
 
-            // Tạo outputStream, nối tới socket
-            DataOutputStream outToClient = new DataOutputStream(connectionSocket.getOutputStream());
+                    } else if (ch == 7) {
+                        System.out.println(ch + ": bay");
 
-            // Đọc thông tin từ socket
-            sentence_from_client = inFromClient.readLine();
+                    } else if (ch == 8) {
+                        System.out.println(ch + ": tam");
+                        break;
 
-            sentence_to_client = sentence_from_client + ": " + trave(Integer.parseInt(sentence_from_client)) + '\n';
-            // ghi dữ liệu ra socket
-            outToClient.writeBytes(sentence_to_client);
-            return;
+                    } else if (ch == 9) {
+                        System.out.println(ch + ": chin");
+
+                    } else {
+                        System.out.println(ch + ": khong xac dinh");
+
+                    }
+
+                    s.close();
+                } catch (Exception e) {
+                    // TODO: handle exception
+                    System.out.println("connect error :" + e);
+                }
+            }
+        } catch (Exception e) {
+            // TODO: handle exception
+            System.out.println("server creation error: " + e);
         }
-
     }
+
 }
