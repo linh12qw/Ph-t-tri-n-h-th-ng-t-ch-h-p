@@ -1,0 +1,106 @@
+package bai8tcp;
+
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Scanner;
+
+public class Qly {
+	
+
+   
+     public int tinh(String e) {
+    	
+    	  while (true) {
+    		  String[] parts = e.split(" ");
+	             String part1 = parts[0];
+	             String part2 = parts[1]; 
+	             String part3 = parts[2]; 
+	        	 int so1, so2, so3;
+    	         try {
+    	        	
+    	        	
+    	             
+    	              so1 = Integer.parseInt(part1);
+    	              so2 = Integer.parseInt(part2);
+    	              
+    	              if(part3.equals("-"))
+    	        		  return so1-so2;
+    	        	  if(part3.equals("+"))
+    	        		  return so1+so2;
+    	        	  if(part3.equals("*"))
+    	        		  return so1*so2;
+    	        	  if(part3.equals("/"))
+    	        		  return so1/so2;
+    	           
+    	         
+    	        	  	break;
+    	           
+    	         }
+    	         catch (Exception ex) {
+    	             System.out.print(e + ": khong phai dinh dang int int char");
+    	           
+    	         }
+    	         try {
+    	     
+    	        	
+    	             
+    	              so3 = Integer.parseInt(part2);
+    	              so2 = Integer.parseInt(part3);
+    	              
+    	              if(part1.equals("-"))
+    	        		  return so3-so2;
+    	        	  if(part1.equals("+"))
+    	        		  return so3+so2;
+    	        	  if(part1.equals("*"))
+    	        		  return so3*so2;
+    	        	  if(part1.equals("/"))
+    	        		  return so3/so2;
+    	           
+    	         
+    	        	  	break;
+    	           
+    	         }
+    	         catch (Exception ex) {
+    	             System.out.print(e + ": khong phai dinh dang char int int");
+    	           
+    	         }
+    	         try {
+    	 
+    	             
+    	              so3 = Integer.parseInt(part3);
+    	              so1 = Integer.parseInt(part1);
+    	              
+    	              if(part2.equals("-"))
+    	        		  return so3-so1;
+    	        	  if(part2.equals("+"))
+    	        		  return so3+so1;
+    	        	  if(part2.equals("*"))
+    	        		  return so3*so1;
+    	        	  if(part2.equals("/"))
+    	        		  return so3/so1;
+    	           
+    	         
+    	        	  
+    	           
+    	         }
+    	         catch (Exception ex) {
+    	             System.out.print(e + ": khong phai dinh dang int char int");
+    	           
+    	         }
+    	     }
+		return 0;
+    	 
+    	  
+    	  
+    	  }
+
+	
+
+	public Qly() {
+		// TODO Auto-generated constructor stub
+	}
+    
+    }
+
+
+
