@@ -1,43 +1,58 @@
 package bai8tcp;
 
+
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.UnknownHostException;
 
-import javax.management.Query;
+
+public class Client {
+
+		 public static void main(String []args) throws IOException
+		    {
+		        // khoi tao 3 bien kieu String
+		        String a,kq;
+		        //tao socket de ket noi toi server
+		        Socket ClientSocket = new Socket("Localhost", 1234);
+		        //thong bao da ket noi thanh cong
+		        System.out.println("Connected to server");
+		        //tao luong nhap du lieu tu ban phim
+		        DataInputStream inFromUser = new DataInputStream(System.in);
+		        //tao luong nhan du lieu tu server
+		        DataInputStream inFromServer = new DataInputStream(ClientSocket.getInputStream());
+		        //tao luong gui du lieu len server
+		        DataOutputStream outToServer = new DataOutputStream(ClientSocket.getOutputStream());
+		        // nhap lieu tu ban phim
+		        try{
+		            System.out.println("nhap  :");
+		            a=inFromUser.readLine();
+		            
+		            // gui len server
+		             outToServer.writeBytes(a+'\n');
+		           
+		        }catch(UnknownHostException e)
+		        {
+		            System.err.println("Server Not Found");
+		            System.exit(1);
+		        }catch(IOException e)
+		        {
+		            System.err.println("Cannot make a connection");
+		            System.exit(1);
+		        }
+		        
+		        //nhan ve tu server
+		        kq=inFromServer.readLine();
+		        //in ra man hinh
+		        System.out.println("ket qua :"+kq);
+		        //dong luong gui du lieu len server
+		        outToServer.close();
+		        //dong luong nhan du lieu tu server
+		        inFromServer.close();
+		        //dong socket client
+		        ClientSocket.close();
+		    }
 
 
-public class Server {
-
-	public static void main(String []args) throws IOException
-    {
-		Qly hhh=new Qly();
-        String so1,so2,so3;
-        int kq;
-        int tong;
-        // tao server socket
-        ServerSocket server = new ServerSocket(1234);
-        System.out.println("Server is now already");
-        //tao 1 socket do ket noi tu client toi server
-        Socket connectionSocket = server.accept();
-        //tao luong nhan du lieu tu client
-        DataInputStream inFromClient = new DataInputStream(connectionSocket.getInputStream());
-        // tao luong gui du lieu toi client
-        DataOutputStream outToClient = new DataOutputStream(connectionSocket.getOutputStream());
-        // truyen du lieu tu client vao 2 bien so1 va so2
-        so1 = inFromClient.readLine();
-        kq= hhh.tinh(so1);
-        String s=String.valueOf(kq);
-        //ep so1 va so2 tu kieu String sang kieu Integer
-        //gui so3 ve client
-        outToClient.writeBytes(s+'\n');
-        //dong luong nhan du lieu tu client
-        inFromClient.close();
-        //dong luong gui du lieu ve client
-        outToClient.close();
-        //dong server socket
-        server.close();
-    }
 }
