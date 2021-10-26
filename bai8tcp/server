@@ -1,0 +1,43 @@
+package bai8tcp;
+
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.net.ServerSocket;
+import java.net.Socket;
+
+import javax.management.Query;
+
+
+public class Server {
+
+	public static void main(String []args) throws IOException
+    {
+		Qly hhh=new Qly();
+        String so1,so2,so3;
+        int kq;
+        int tong;
+        // tao server socket
+        ServerSocket server = new ServerSocket(1234);
+        System.out.println("Server is now already");
+        //tao 1 socket do ket noi tu client toi server
+        Socket connectionSocket = server.accept();
+        //tao luong nhan du lieu tu client
+        DataInputStream inFromClient = new DataInputStream(connectionSocket.getInputStream());
+        // tao luong gui du lieu toi client
+        DataOutputStream outToClient = new DataOutputStream(connectionSocket.getOutputStream());
+        // truyen du lieu tu client vao 2 bien so1 va so2
+        so1 = inFromClient.readLine();
+        kq= hhh.tinh(so1);
+        String s=String.valueOf(kq);
+        //ep so1 va so2 tu kieu String sang kieu Integer
+        //gui so3 ve client
+        outToClient.writeBytes(s+'\n');
+        //dong luong nhan du lieu tu client
+        inFromClient.close();
+        //dong luong gui du lieu ve client
+        outToClient.close();
+        //dong server socket
+        server.close();
+    }
+}
